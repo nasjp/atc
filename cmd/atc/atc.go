@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/NasSilverBullet/atc"
 	"github.com/urfave/cli"
 )
 
@@ -31,7 +32,7 @@ func run() error {
 
 func routes(app *cli.App) *cli.App {
 	app.Commands = []cli.Command{
-		GetTestCmd(),
+		atc.GetTestCmd(),
 	}
 	return app
 }
