@@ -4,6 +4,14 @@
 
 ## atc is light test tools for atcoder
 
+## Getting Started
+
+```sh
+go get -u github.com/NasSilverBullet/atc/cmd/atc
+```
+
+## Ideal image
+
 ```sh
 $ atc
 === RUN   abc051_b.py
