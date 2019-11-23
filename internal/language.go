@@ -5,6 +5,7 @@ import (
 )
 
 // GetLanguagePath return local laguange path
+// TODO yamlの設定ファイルから読めるようにする
 func GetLanguagePath(fileName string) string {
 	ext := filepath.Ext(fileName)
 	switch ext {
