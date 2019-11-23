@@ -20,21 +20,43 @@ func GetExampleTestCmd() cli.Command {
 			if err != nil {
 				return err
 			}
+
 			fs, err := ioutil.ReadDir(dir)
-
 			if err != nil {
 				return err
 			}
+
 			for _, f := range fs {
-				fmt.Println(f.Name())
-			}
-			e, err := internal.GetExamples("abc144", "a")
-			if err != nil {
-				return err
-			}
+				lp := internal.GetLanguagePath(f.Name())
+				if lp == "" {
+					continue
+				}
 
-			_ = e
+				es, err := internal.GetExamples(f.Name())
+				if err != nil {
+					return err
+				}
 
+				if len(es) == 0 {
+					continue
+				}
+				fmt.Printf("=== RUN   %s\n", f.Name())
+				for i, e := range es {
+					// TODO 実行時間を表示する
+					out, err := e.Run(lp, f.Name())
+					if err != nil {
+						return err
+					}
+					if out == e.Output {
+						fmt.Printf("    --- PASS   %s  sample%d\n", f.Name(), i+1)
+						continue
+					}
+					fmt.Printf("    --- FAIL   %s  sample%d\n", f.Name(), i+1)
+					fmt.Printf("Expect: %s", out)
+					fmt.Printf("Actual: %s", e.Output)
+				}
+
+			}
 			return nil
 		},
 	}
