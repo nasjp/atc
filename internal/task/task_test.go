@@ -8,6 +8,8 @@ import (
 	"github.com/NasSilverBullet/atc/internal/task"
 )
 
+const testFile = "tmp.py"
+
 func TestGetExamples(t *testing.T) {
 	type args struct {
 		contest  string
@@ -36,6 +38,71 @@ func TestGetExamples(t *testing.T) {
 			}
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("GetExamples() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func setupTestExample_Run(t *testing.T) func(t *testing.T) {
+
+	code := `def f():
+    a, b = input().split()
+    a, b = int(a), int(b)
+    rem = int(a) * int(b) % 2
+    if rem == 1:
+        print('Odd')
+        return
+    print('Even')
+
+
+f()`
+
+	f, err := os.Create(testFile)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer f.Close()
+
+	f.WriteString(code)
+
+	return func(t *testing.T) {
+		if err := os.Remove(testFile); err != nil {
+			t.Fatal(err)
+		}
+	}
+}
+
+func TestExample_Run(t *testing.T) {
+	defer setupTestExample_Run(t)(t)
+	type fields struct {
+		Input  string
+		Output string
+	}
+	type args struct {
+		command  string
+		fileName string
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		args   args
+		want   string
+	}{
+		{"Success", fields{"3 4", "Even"}, args{"python3", testFile}, "Even\n"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			e := &task.Example{
+				Input:  tt.fields.Input,
+				Output: tt.fields.Output,
+			}
+			got, err := e.Run(tt.args.command, tt.args.fileName)
+			if err != nil {
+				t.Errorf("Unexpected error: %v", err)
+				return
+			}
+			if got != tt.want {
+				t.Errorf("Example.Run() = %v, want %v", got, tt.want)
 			}
 		})
 	}

@@ -2,6 +2,8 @@ package task
 
 import (
 	"fmt"
+	"io"
+	"os/exec"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -61,4 +63,21 @@ func GetExamples(contest, question string) (Examples, error) {
 	es = append(es, &Example{i4, o4})
 	return es, nil
 }
+
+// Check
+func (e *Example) Run(command, fileName string) (string, error) {
+	cmd := exec.Command("sh", "-c", fmt.Sprintf("%s %s", command, fileName))
+	stdin, err := cmd.StdinPipe()
+	if err != nil {
+		return "", err
+	}
+
+	io.WriteString(stdin, e.Input)
+	stdin.Close()
+	out, err := cmd.Output()
+	if err != nil {
+		return "", err
+	}
+
+	return string(out), nil
 }
