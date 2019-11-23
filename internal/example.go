@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"io"
 	"os/exec"
+	"path/filepath"
+	"strings"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -33,8 +35,17 @@ type Examples []*Example
 // TODO 41 以下のコンテストでもできるようにする
 // TODO URLとコンテスト番号がマッチしていないものにも対応したい
 // なぜ goquery はpre#pre-pre-sample0 を探せないのか
-func GetExamples(contest, question string) (Examples, error) {
-	url := fmt.Sprintf(`https://atcoder.jp/contests/%[1]s/tasks/%[1]s_%s`, contest, question)
+func GetExamples(fileName string) (Examples, error) {
+
+	base := getFileNameWithoutExt(fileName)
+
+	bs := strings.Split(base, "_")
+
+	if len(bs) != 2 {
+		return nil, fmt.Errorf("Cant't parse file name: %s", fileName)
+	}
+
+	url := fmt.Sprintf(`https://atcoder.jp/contests/%[1]s/tasks/%[1]s_%s`, bs[0], bs[1])
 	doc, err := goquery.NewDocument(url)
 	if err != nil {
 		return nil, err
@@ -64,6 +75,10 @@ func GetExamples(contest, question string) (Examples, error) {
 	}
 	es = append(es, &Example{i4, o4})
 	return es, nil
+}
+
+func getFileNameWithoutExt(fileName string) string {
+	return fileName[:len(fileName)-len(filepath.Ext(fileName))]
 }
 
 // Run return command result
