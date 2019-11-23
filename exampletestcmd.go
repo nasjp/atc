@@ -45,15 +45,17 @@ func GetExampleTestCmd() cli.Command {
 					// TODO 実行時間を表示する
 					out, err := e.Run(lp, f.Name())
 					if err != nil {
-						return err
+						fmt.Printf("    --- FAIL   %s  sample%d\n", f.Name(), i+1)
+						fmt.Printf("        Runtime error: %v\n", err)
+						continue
 					}
 					if out == e.Output {
 						fmt.Printf("    --- PASS   %s  sample%d\n", f.Name(), i+1)
 						continue
 					}
 					fmt.Printf("    --- FAIL   %s  sample%d\n", f.Name(), i+1)
-					fmt.Printf("Expect: %s", out)
-					fmt.Printf("Actual: %s", e.Output)
+					fmt.Printf("        Expect: %s", out)
+					fmt.Printf("        Actual: %s", e.Output)
 				}
 
 			}
