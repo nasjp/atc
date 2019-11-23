@@ -43,7 +43,7 @@ func TestGetExamples(t *testing.T) {
 	}
 }
 
-func setupTestExample_Run(t *testing.T) func(t *testing.T) {
+func setupTestExampleRun(t *testing.T) func(t *testing.T) {
 
 	code := `def f():
     a, b = input().split()
@@ -73,7 +73,7 @@ f()`
 }
 
 func TestExample_Run(t *testing.T) {
-	defer setupTestExample_Run(t)(t)
+	defer setupTestExampleRun(t)(t)
 	type fields struct {
 		Input  string
 		Output string

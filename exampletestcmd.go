@@ -9,6 +9,7 @@ import (
 	"github.com/urfave/cli"
 )
 
+// GetExampleTestCmd return run exmaple test command
 func GetExampleTestCmd() cli.Command {
 	return cli.Command{
 		Name:    "test",

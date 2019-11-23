@@ -20,14 +20,16 @@ const (
 	outputExample4Selector = "#task-statement > span > span.lang-ja > div:nth-child(17) > section > pre"
 )
 
+// Example has exmaples's io string
 type Example struct {
 	Input  string
 	Output string
 }
 
+// Examples is multiple Example
 type Examples []*Example
 
-// GetExample return Example
+// GetExamples return Examples
 // TODO 41 以下のコンテストでもできるようにする
 // TODO URLとコンテスト番号がマッチしていないものにも対応したい
 // なぜ goquery はpre#pre-pre-sample0 を探せないのか
@@ -64,7 +66,7 @@ func GetExamples(contest, question string) (Examples, error) {
 	return es, nil
 }
 
-// Check
+// Run return command result
 func (e *Example) Run(command, fileName string) (string, error) {
 	cmd := exec.Command("sh", "-c", fmt.Sprintf("%s %s", command, fileName))
 	stdin, err := cmd.StdinPipe()
