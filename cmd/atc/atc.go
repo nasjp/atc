@@ -26,7 +26,9 @@ func run() error {
 
 	routes(app)
 
-	app.Run(os.Args)
+	if err := app.Run(os.Args); err != nil {
+		return err
+	}
 	return nil
 }
 
