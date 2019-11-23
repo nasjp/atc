@@ -13,7 +13,7 @@ go get -u github.com/NasSilverBullet/atc/cmd/atc
 ## Ideal image
 
 ```sh
-$ atc
+$ atc t
 === RUN   abc051_b.py
 --- PASS: abc051_b.py  (239 ms)
     --- PASS  sample1  (239 ms)
@@ -27,7 +27,7 @@ $ atc
 ```
 
 ```sh
-$ atc abc051_b.py
+$ atc t abc051_b.py
 === RUN   abc051_b.py
 --- PASS: abc051_b.py  (239 ms)
     --- PASS  sample1  (239 ms)
