@@ -1,8 +1,6 @@
 package atc
 
 import (
-	"fmt"
-
 	"github.com/NasSilverBullet/atc/internal/task"
 	"github.com/urfave/cli"
 )
@@ -13,11 +11,11 @@ func GetExampleTestCmd() cli.Command {
 		Aliases: []string{"t"},
 		Usage:   "test io",
 		Action: func(c *cli.Context) error {
-			e, err := task.GetExample("abc144", "a")
+			e, err := task.GetExamples("abc144", "a")
 			if err != nil {
 				return err
 			}
-			fmt.Println(e)
+			_ = e
 			return nil
 		},
 	}
