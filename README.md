@@ -35,10 +35,6 @@ $ atc t abc051_b.py
     --- PASS  sample3  (182 ms)
 ```
 
-## References
-
-<Refs: https://github.com/kmyk/online-judge-tools>
-
 ## License
 
 MIT License. See LICENSE.txt for more information.
