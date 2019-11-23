@@ -55,10 +55,16 @@ func GetExamples(fileName string) (Examples, error) {
 
 	i1 := doc.Find(inputExample1Selector).Text()
 	o1 := doc.Find(outputExample1Selector).Text()
+	if i1 == "" {
+		return nil, nil
+	}
 	es = append(es, &Example{i1, o1})
 
 	i2 := doc.Find(inputExample2Selector).Text()
 	o2 := doc.Find(outputExample2Selector).Text()
+	if i2 == "" {
+		return es, nil
+	}
 	es = append(es, &Example{i2, o2})
 
 	i3 := doc.Find(inputExample3Selector).Text()
