@@ -32,7 +32,7 @@ func run() error {
 
 func routes(app *cli.App) *cli.App {
 	app.Commands = []cli.Command{
-		atc.GetTestCmd(),
+		atc.GetExampleTestCmd(),
 	}
 	return app
 }
