@@ -31,7 +31,7 @@ func NewConfig() (*Config, error) {
 
 	f, err := os.Open(p)
 	if err != nil {
-		return nil, fmt.Errorf("can't find ~/.atc.yml. please make this file and write config.")
+		return nil, fmt.Errorf("can't find config file, please run init command")
 	}
 	defer f.Close()
 
@@ -43,7 +43,7 @@ func NewConfig() (*Config, error) {
 	c := &Config{}
 
 	if err := yaml.Unmarshal(b, c); err != nil {
-		return nil, fmt.Errorf("can't parse ~/.atc.yml. please confirm yaml format.")
+		return nil, fmt.Errorf("can't parse config file. please confirm file format.")
 	}
 
 	return c, nil
