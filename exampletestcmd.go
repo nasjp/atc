@@ -27,7 +27,12 @@ func GetExampleTestCmd() cli.Command {
 			}
 
 			for _, f := range fs {
-				lp := internal.GetLanguagePath(f.Name())
+				c, err := internal.NewConfig()
+				if err != nil {
+					return err
+				}
+
+				lp := c.LanguagesConfig.GetLanguagePath(f.Name())
 				if lp == "" {
 					continue
 				}
