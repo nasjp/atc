@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"path/filepath"
+	"strings"
 
 	"gopkg.in/yaml.v2"
 )
@@ -24,11 +24,7 @@ type CredentialsConfig struct {
 }
 
 func NewConfig() (*Config, error) {
-	p, err := filepath.Abs(ConfigPath)
-	if err != nil {
-		return nil, err
-	}
-
+	p := strings.Replace(ConfigPath, "~", os.Getenv("HOME"), 1)
 	f, err := os.Open(p)
 	if err != nil {
 		return nil, fmt.Errorf("can't find config file, please run init command")
@@ -49,24 +45,17 @@ func NewConfig() (*Config, error) {
 	return c, nil
 }
 
-func ExistConfig() (bool, error) {
-	p, err := filepath.Abs(ConfigPath)
-	if err != nil {
-		return false, err
-	}
-
+func ExistConfig() bool {
+	p := strings.Replace(ConfigPath, "~", os.Getenv("HOME"), 1)
 	if _, err := os.Stat(p); os.IsNotExist(err) {
-		return false, nil
+		return false
 	}
 
-	return true, nil
+	return true
 }
 
 func GenerateConfig() error {
-	p, err := filepath.Abs(ConfigPath)
-	if err != nil {
-		return err
-	}
+	p := strings.Replace(ConfigPath, "~", os.Getenv("HOME"), 1)
 
 	f, err := os.Create(p)
 	if err != nil {
@@ -78,6 +67,7 @@ func GenerateConfig() error {
 	if _, err := f.WriteString(ConfigFileTemplate); err != nil {
 		return err
 	}
+
 	return nil
 }
 
