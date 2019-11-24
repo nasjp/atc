@@ -27,7 +27,7 @@ func NewConfig() (*Config, error) {
 	p := strings.Replace(ConfigPath, "~", os.Getenv("HOME"), 1)
 	f, err := os.Open(p)
 	if err != nil {
-		return nil, fmt.Errorf("can't find config file, please run init command")
+		return nil, fmt.Errorf("Can't find config file, please run init command")
 	}
 	defer f.Close()
 
@@ -39,7 +39,7 @@ func NewConfig() (*Config, error) {
 	c := &Config{}
 
 	if err := yaml.Unmarshal(b, c); err != nil {
-		return nil, fmt.Errorf("can't parse config file. please confirm file format.")
+		return nil, fmt.Errorf("Can't parse config file. please confirm file format.")
 	}
 
 	return c, nil

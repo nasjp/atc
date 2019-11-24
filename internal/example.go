@@ -42,7 +42,7 @@ func GetExamples(fileName string) (Examples, error) {
 	bs := strings.Split(base, "_")
 
 	if len(bs) != 2 {
-		return nil, fmt.Errorf("Cant't parse file name: %s", fileName)
+		return nil, fmt.Errorf("Can't parse file name: %s", fileName)
 	}
 
 	url := fmt.Sprintf(`https://atcoder.jp/contests/%[1]s/tasks/%[1]s_%s`, bs[0], bs[1])

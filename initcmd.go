@@ -15,14 +15,15 @@ func GetInitCmd() cli.Command {
 		Usage:   "initialize config files",
 		Action: func(c *cli.Context) error {
 			if ok := internal.ExistConfig(); ok {
-				fmt.Println("config file aleady exists")
+				fmt.Println("Config file aleady exists")
 				return nil
 			}
 
 			if err := internal.GenerateConfig(); err != nil {
 				return err
 			}
-			fmt.Println("generated config file successfully!!")
+			fmt.Println("Config file generated successfully!!")
+			fmt.Println("Please edit config file")
 
 			return nil
 		},
