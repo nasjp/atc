@@ -61,3 +61,28 @@ func ExistConfig() (bool, error) {
 
 	return true, nil
 }
+
+func GenerateConfig() error {
+	p, err := filepath.Abs(ConfigPath)
+	if err != nil {
+		return err
+	}
+
+	f, err := os.Create(p)
+	if err != nil {
+		return err
+	}
+
+	defer f.Close()
+
+	if _, err := f.WriteString(ConfigFileTemplate); err != nil {
+		return err
+	}
+	return nil
+}
+
+const ConfigFileTemplate = `credentials:
+  user_name: ""
+    password: ""
+	languages:
+	  py: "python3"`

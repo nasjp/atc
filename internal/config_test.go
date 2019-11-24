@@ -1,6 +1,7 @@
 package internal_test
 
 import (
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -125,5 +126,51 @@ func TestExistConfig(t *testing.T) {
 				t.Errorf("ExistConfig() = %v, want %v", got, tt.want)
 			}
 		})
+	}
+}
+
+func setupTestGenerateConfig(t *testing.T) func(t *testing.T) {
+	tmp := internal.ConfigPath
+
+	internal.ConfigPath = testConfigPath
+
+	return func(t *testing.T) {
+		p, err := filepath.Abs(testConfigPath)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if err := os.Remove(p); err != nil {
+			t.Fatal(err)
+		}
+
+		internal.ConfigPath = tmp
+	}
+}
+
+func TestGenerateConfig(t *testing.T) {
+	defer setupTestGenerateConfig(t)(t)
+
+	if err := internal.GenerateConfig(); err != nil {
+		t.Errorf("Unexpected error: %v", err)
+		return
+	}
+
+	f, err := os.Open(testConfigPath)
+	if err != nil {
+		t.Errorf("config file was not created")
+		return
+	}
+
+	defer f.Close()
+
+	b, err := ioutil.ReadAll(f)
+	if err != nil {
+		t.Errorf("Unexpected error: %v", err)
+		return
+	}
+
+	if want, got := internal.ConfigFileTemplate, string(b); want != got {
+		t.Errorf("GenerateConfig() => config file text %v, want %v", got, want)
 	}
 }
