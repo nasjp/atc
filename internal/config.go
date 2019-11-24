@@ -73,6 +73,6 @@ func GenerateConfig() error {
 
 const ConfigFileTemplate = `credentials:
   user_name: ""
-    password: ""
-	languages:
-	  py: "python3"`
+  password: ""
+languages:
+  py: "python3"`
