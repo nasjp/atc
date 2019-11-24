@@ -11,7 +11,7 @@ $ go get -u github.com/NasSilverBullet/atc/cmd/atc
 
 $ atc init
 Config file generated successfully!!
-Please edit config file
+Please edit config file (~/.atc.yml)
 ```
 
 ## Run
