@@ -14,12 +14,7 @@ func GetInitCmd() cli.Command {
 		Aliases: []string{"i"},
 		Usage:   "initialize config files",
 		Action: func(c *cli.Context) error {
-			ok, err := internal.ExistConfig()
-			if err != nil {
-				return err
-			}
-
-			if ok {
+			if ok := internal.ExistConfig(); ok {
 				fmt.Println("config file aleady exists")
 				return nil
 			}
@@ -27,6 +22,7 @@ func GetInitCmd() cli.Command {
 			if err := internal.GenerateConfig(); err != nil {
 				return err
 			}
+			fmt.Println("generated config file successfully!!")
 
 			return nil
 		},
