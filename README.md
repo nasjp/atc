@@ -1,8 +1,8 @@
 [![Actions Status](https://github.com/NasSilverBullet/atc/workflows/CI/badge.svg)](https://github.com/NasSilverBullet/atc/actions)
 
-# [WIP] atc
+# atc
 
-## atc is light test tools for atcoder
+## :rocket: lightweight test tool for atcoder :rocket:
 
 ## Getting Started
 
