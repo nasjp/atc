@@ -15,7 +15,7 @@ func GetInitCmd() cli.Command {
 		Usage:   "initialize config files",
 		Action: func(c *cli.Context) error {
 			if ok := internal.ExistConfig(); ok {
-				fmt.Println("Config file aleady exists")
+				fmt.Printf("Config file (%s) aleady exists\n", internal.ConfigPath)
 				return nil
 			}
 
@@ -23,7 +23,7 @@ func GetInitCmd() cli.Command {
 				return err
 			}
 			fmt.Println("Config file generated successfully!!")
-			fmt.Println("Please edit config file")
+			fmt.Printf("Please edit config file (%s)\n", internal.ConfigPath)
 
 			return nil
 		},
