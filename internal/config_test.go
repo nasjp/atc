@@ -117,11 +117,7 @@ func TestExistConfig(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt := tt
 			defer tt.setupFunc(t)(t)
-			got, err := internal.ExistConfig()
-			if err != nil {
-				t.Errorf("Unexpected error: %v", err)
-				return
-			}
+			got := internal.ExistConfig()
 			if got != tt.want {
 				t.Errorf("ExistConfig() = %v, want %v", got, tt.want)
 			}
