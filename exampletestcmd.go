@@ -59,8 +59,8 @@ func GetExampleTestCmd() cli.Command {
 						continue
 					}
 					fmt.Printf("    --- FAIL   %s  sample%d\n", f.Name(), i+1)
-					fmt.Printf("        Expect: %s", out)
-					fmt.Printf("        Actual: %s", e.Output)
+					fmt.Printf("        EXPECT: %s", out)
+					fmt.Printf("        ACTUAL: %s", e.Output)
 				}
 
 			}
