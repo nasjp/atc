@@ -48,3 +48,16 @@ func NewConfig() (*Config, error) {
 
 	return c, nil
 }
+
+func ExistConfig() (bool, error) {
+	p, err := filepath.Abs(ConfigPath)
+	if err != nil {
+		return false, err
+	}
+
+	if _, err := os.Stat(p); os.IsNotExist(err) {
+		return false, nil
+	}
+
+	return true, nil
+}
